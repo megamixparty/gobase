@@ -8,6 +8,6 @@ import (
 
 // UserRepository interface
 type UserRepository interface {
-	IndexUsers(context.Context) []*model.User
-	GetUser(context.Context) *model.User
+	IndexUsers(context.Context) ([]*model.User, error)
+	GetUser(context.Context, int64) (*model.User, error)
 }
