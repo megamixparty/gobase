@@ -1,39 +1,27 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 
 	_ "github.com/go-sql-driver/mysql" // Mysql driver
+	"github.com/jmoiron/sqlx"
 )
 
-// MysqlConfig Struct contains mysql configuration
-type MysqlConfig struct {
-	Username string `env:"MYSQL_USERNAME,required"`
-	Password string `env:"MYSQL_PASSWORD,required"`
-	Host     string `env:"MYSQL_HOST,default=localhost"`
-	Port     string `env:"MYSQL_PORT,default=3306"`
-	Name     string `env:"MYSQL_NAME,required"`
-	Charset  string `env:"MYSQL_CHARSET,default=utf8mb4"`
-	MaxIdle  int    `env:"MYSQL_MAX_IDLE,default=20"`
-	MaxOpen  int    `env:"MYSQL_MAX_OPEN,default=100"`
-}
-
 // NewMysql create new mysql database instance and return it
-func NewMysql(cfg *MysqlConfig) (*sql.DB, error) {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True",
-		cfg.Username,
-		cfg.Password,
-		cfg.Host,
-		cfg.Port,
-		cfg.Name,
-		cfg.Charset))
+func NewMysql(cfg *EnvConfig) (*sqlx.DB, error) {
+	db, err := sqlx.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True",
+		cfg.Mysql.Username,
+		cfg.Mysql.Password,
+		cfg.Mysql.Host,
+		cfg.Mysql.Port,
+		cfg.Mysql.Name,
+		cfg.Mysql.Charset))
 	if err != nil {
 		return nil, err
 	}
 
-	db.SetMaxIdleConns(cfg.MaxIdle)
-	db.SetMaxOpenConns(cfg.MaxOpen)
+	db.SetMaxIdleConns(cfg.Mysql.MaxIdle)
+	db.SetMaxOpenConns(cfg.Mysql.MaxOpen)
 	err = db.Ping()
 	return db, err
 }

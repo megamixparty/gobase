@@ -17,7 +17,7 @@ type UserMysql struct {
 	db sqlx.ExtContext
 }
 
-// NewUserMysql returns database implementation of UserRepository
+// NewUserMysql returns database implementation of IUserRepository
 func NewUserMysql(db sqlx.ExtContext) *UserMysql {
 	return &UserMysql{db}
 }
