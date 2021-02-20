@@ -22,8 +22,8 @@ func NewUserMysql(db sqlx.ExtContext) *UserMysql {
 	return &UserMysql{db}
 }
 
-// IndexUser get users object
-func (um *UserMysql) IndexUser(ctx context.Context) (users []*model.User, err error) {
+// SelectUsers do SELECT query to return user object
+func (um *UserMysql) SelectUsers(ctx context.Context) (users []*model.User, err error) {
 	query := fmt.Sprintf(`
 		SELECT id, first_name, last_name
 		FROM %s
@@ -45,8 +45,8 @@ func (um *UserMysql) IndexUser(ctx context.Context) (users []*model.User, err er
 	return users, err
 }
 
-// GetUser get user object based on id
-func (um *UserMysql) GetUser(ctx context.Context, id int64) (user *model.User, err error) {
+// SelectUser do SELECT query to return user object based on id
+func (um *UserMysql) SelectUser(ctx context.Context, id int64) (user *model.User, err error) {
 	query := fmt.Sprintf(`
 		SELECT id, first_name, last_name
 		FROM %s
@@ -60,7 +60,7 @@ func (um *UserMysql) GetUser(ctx context.Context, id int64) (user *model.User, e
 	return user, nil
 }
 
-// CreateUser Insert user object into database
+// CreateUser do INSERT query to user object into database
 func (um *UserMysql) CreateUser(ctx context.Context, user *model.User) (err error) {
 	query := fmt.Sprintf(`
 		INSERT INTO %s

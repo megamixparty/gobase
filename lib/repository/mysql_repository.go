@@ -8,7 +8,7 @@ import (
 
 // UserRepository interface
 type UserRepository interface {
-	IndexUsers(context.Context) ([]*model.User, error)
-	GetUser(context.Context, int64) (*model.User, error)
+	SelectUsers(context.Context) ([]*model.User, error)
+	SelectUser(context.Context, int64) (*model.User, error)
 	CreateUser(context.Context, *model.User) error
 }
