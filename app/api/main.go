@@ -31,7 +31,7 @@ func main() {
 	}
 
 	// Repository definition
-	userRepo := mysql.NewUserMysql(mysqlDB)
+	userRepo := mysql.NewMysqlRepository(mysqlDB)
 
 	// Service definition
 	userService := user_service.NewUserService(userRepo)

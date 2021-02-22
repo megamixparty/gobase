@@ -15,7 +15,19 @@ func (us *UserService) CreateUser(ctx context.Context, user *model.User) (err er
 		return err
 	}
 
-	err = us.userRep.CreateUser(ctx, user)
+	conn, err := us.db.GetConnection(ctx, false)
+	if err != nil {
+		return err
+	}
+
+	userRep := us.db.NewUserRepository(conn)
+	err = userRep.CreateUser(ctx, user)
+	if err != nil {
+		us.db.Rollback(conn)
+		return err
+	}
+
+	err = us.db.Commit(conn)
 	if err != nil {
 		return err
 	}

@@ -8,7 +8,13 @@ import (
 
 // GetUser query into repository to return users object
 func (us *UserService) GetUser(ctx context.Context, id int64) (user *model.User, err error) {
-	user, err = us.userRep.SelectUser(ctx, id)
+	conn, err := us.db.GetConnection(ctx, false)
+	if err != nil {
+		return nil, err
+	}
+
+	userRep := us.db.NewUserRepository(conn)
+	user, err = userRep.SelectUser(ctx, id)
 	if err != nil {
 		return nil, err
 	}

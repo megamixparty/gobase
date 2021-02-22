@@ -6,10 +6,10 @@ import (
 
 // UserService struct store userDB
 type UserService struct {
-	userRep repository.IUserRepository
+	db repository.IDatabaseRepository
 }
 
 // NewUserService returns service implementation of IUserService
-func NewUserService(userRep repository.IUserRepository) *UserService {
-	return &UserService{userRep}
+func NewUserService(db repository.IDatabaseRepository) *UserService {
+	return &UserService{db}
 }
