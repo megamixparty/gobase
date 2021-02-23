@@ -15,4 +15,9 @@ type EnvConfig struct {
 		MaxIdle  int    `env:"MYSQL_MAX_IDLE,default=20"`
 		MaxOpen  int    `env:"MYSQL_MAX_OPEN,default=100"`
 	}
+
+	Redis struct {
+		Host string `env:"REDIS_HOST,required"`
+		Port string `env:"REDIS_PORT,required"`
+	}
 }

@@ -6,10 +6,11 @@ import (
 
 // UserService struct store userDB
 type UserService struct {
-	db repository.IDatabaseRepository
+	db    repository.IDatabaseRepository
+	redis repository.IMemoryRepository
 }
 
 // NewUserService returns service implementation of IUserService
-func NewUserService(db repository.IDatabaseRepository) *UserService {
-	return &UserService{db}
+func NewUserService(db repository.IDatabaseRepository, redis repository.IMemoryRepository) *UserService {
+	return &UserService{db, redis}
 }
